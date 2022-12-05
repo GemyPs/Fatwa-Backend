@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fatwa", "test\Fatwa.csproj", "{02D072DD-7B6B-4ADA-BBD1-2CC61569D5E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{F3188EB9-88BD-4B66-8670-6EBF2F4BB7F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceLayer", "ServiceLayer\ServiceLayer.csproj", "{CE11D1D1-96CF-462A-8981-9BA720063F3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02D072DD-7B6B-4ADA-BBD1-2CC61569D5E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02D072DD-7B6B-4ADA-BBD1-2CC61569D5E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02D072DD-7B6B-4ADA-BBD1-2CC61569D5E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02D072DD-7B6B-4ADA-BBD1-2CC61569D5E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3188EB9-88BD-4B66-8670-6EBF2F4BB7F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3188EB9-88BD-4B66-8670-6EBF2F4BB7F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3188EB9-88BD-4B66-8670-6EBF2F4BB7F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3188EB9-88BD-4B66-8670-6EBF2F4BB7F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE11D1D1-96CF-462A-8981-9BA720063F3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE11D1D1-96CF-462A-8981-9BA720063F3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE11D1D1-96CF-462A-8981-9BA720063F3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE11D1D1-96CF-462A-8981-9BA720063F3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AA709ED2-8CE6-41A7-98DB-27B7C04BD229}
+	EndGlobalSection
+EndGlobal
