@@ -17,7 +17,7 @@ namespace DataLayer.Models
 
         [ForeignKey("QuestionId")]
         public virtual Question Question { get; set; }
-        public int? QuestionId { get; set; }
+        public int QuestionId { get; set; }
 
         public User User { get; set; }
     }

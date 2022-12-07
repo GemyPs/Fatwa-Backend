@@ -9,7 +9,7 @@ using ServiceLayer.Models;
 
 namespace Fatwa.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CommentsController : Controller
@@ -32,32 +32,16 @@ namespace Fatwa.Controllers
             this._roleManager = roleManager;
             _context = context;
         }
-        /*
-         [1] Method to post an comments for a question(int questionID, string commentText)
-            - Take questionID and commentText from User, then get SheikhId from The authentication 
-            - get userId from questions dataBase, Post the answer and if the answer posted from sheikh
-            - mark is Sheikh bool = 1, else mark bool sheikh = 0
-         */
-        
-        [HttpPost("/PostComment"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("/PostComment")]
         public IActionResult PostComment(commentsVM newComment)
         {
             try
-            {   
-                int questionID = _context.Question.Where(x => x.Id == newComment.questionID).Select(x => x.Id).FirstOrDefault();
-                string? userID = _context.User.Where(x => x.UserName == User.Identity.Name).Select(x => x.Id).FirstOrDefault();
-                if (questionID == 0)
+            {
+                bool questionFound = unitOfWork.QuestionRep.Is_Found(newComment.questionID);
+                if (!questionFound)
                     return BadRequest(new { message = "This question not found", status = false });
 
-                Comment comment = new Comment
-                {
-                    CommentText = newComment.comment,
-                    UserId = userID,
-                    QuestionId = newComment.questionID,
-                    IsAnswer = false
-                };
-                _context.Comment.Add(comment);
-                _context.SaveChanges();
+                unitOfWork.CommentRep.create(newComment, User.Identity.Name);
             }
             catch (Exception e)
             {
@@ -65,15 +49,40 @@ namespace Fatwa.Controllers
             }
             return Ok(new { message = "Comment Posted Successfuly !", status = true});
         }
-        [HttpGet("/GetRelatedComments"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public IActionResult getQuestionComments(int requestQuestionID) 
-        {
-            int questionID = _context.Question.Where(x => x.Id == requestQuestionID).Select(x => x.Id).FirstOrDefault();
-            if (questionID == 0)
-                return BadRequest(new { message = "Question not found", status = false});
 
-            var relatedComments = _context.Comment.Where(x => x.QuestionId == questionID);
-            return Ok(new { message = "Related comments fitched successfully", data = relatedComments, status = true });
+        //[HttpGet("/GetRelatedComments")]
+        //public IActionResult getQuestionComments(int requestQuestionID) 
+        //{
+        //    try
+        //    {
+        //        bool questionFound = unitOfWork.QuestionRep.Is_Found(requestQuestionID);
+        //        if (!questionFound)
+        //            return BadRequest(new { message = "Question not found", status = false });
+
+        //        List<Comment> relatedComments = unitOfWork.CommentRep.getRelated(requestQuestionID);
+        //        return Ok(new { message = "Related comments fitched successfully", data = relatedComments, status = true });
+        //    }catch(Exception e)
+        //    {
+        //        return BadRequest(new { message = e.Message, status = false});
+        //    }
+        //}
+
+
+        [HttpDelete("/Delete")]
+        public IActionResult Delete(int commentID)
+        {
+            try
+            {
+                if (!unitOfWork.CommentRep.is_found(commentID))
+                    return BadRequest(new { message = "comment not found", status = false });
+
+                unitOfWork.CommentRep.remove(commentID);
+                return Ok(new { message = "comment deleted successfully", status = true});
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

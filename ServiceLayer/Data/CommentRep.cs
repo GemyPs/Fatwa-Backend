@@ -1,10 +1,6 @@
 ﻿using DataLayer;
 using DataLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ServiceLayer.Models;
 
 namespace ServiceLayer.Data
 {
@@ -17,16 +13,34 @@ namespace ServiceLayer.Data
             unitOfWork = new UnitOfWork(context);
         }
 
+        public void create(commentsVM newComment, string userName)
+        {
+            string? userID = unitOfWork.UserLogin.GetId(userName);
+            
+            Comment comment = new Comment { 
+                CommentText = newComment.comment,
+                UserId = userID,
+                QuestionId = newComment.questionID,
+                IsAnswer = false
+            };
+            Insert(comment);
+            unitOfWork.Commit();
+        }
+
+        //public List<Comment> getRelated(int questionId)
+        //{
+        //    return AsQuerable().Where(x => x.QuestionId == questionId).ToList();
+        //}
         public void remove(int commentId)
         {
             Comment comment = GetById(commentId);
             Delete(comment);
+            unitOfWork.Commit();
         }
 
-        public void removebyQuestionId(int questionId)
+        public bool is_found(int commentId)
         {
-            List<Comment> comments = AsQuerable().Where(x => x.QuestionId == questionId).ToList();
-            RemoveRange(comments);
+            return IsFound(commentId);
         }
     }
 }

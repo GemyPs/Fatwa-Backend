@@ -10,7 +10,7 @@ using ServiceLayer.Models;
 namespace Fatwa.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class QuestionsController : Controller
     {
         UnitOfWork unitOfWork;
@@ -33,7 +33,7 @@ namespace Fatwa.Controllers
         }
 
 
-        [HttpPost("/SendQuestion"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost("/SendQuestion")]
         public async Task<IActionResult> CreateQuestion(QuestionsVM newQuestion)
         {
             try
@@ -48,7 +48,7 @@ namespace Fatwa.Controllers
             return Ok(new { message = "Question added !", status = true });
         }
 
-        [HttpGet("/GetAllQuestions"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("/GetAllQuestions")]
         public IActionResult GetAllQuestions()
         {
             List<Question> questionList = new List<Question>();
@@ -63,7 +63,7 @@ namespace Fatwa.Controllers
             return Ok(new { message = "Questions Fitched Successfully!", status = true, data = questionList });
         }
 
-        [HttpGet("/GetQuestionsBySheikhID"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("/GetQuestionsBySheikhID")]
         public IActionResult GetBySheikhId(string SheikhId)
         {
             try
@@ -89,7 +89,6 @@ namespace Fatwa.Controllers
             {
                 if (!unitOfWork.QuestionRep.IsFound(questionId))
                     return BadRequest(new { message = "Question not found", status = false});
-                unitOfWork.CommentRep.removebyQuestionId(questionId);
                 unitOfWork.QuestionRep.Delete(questionId);
                 return Ok(new { Message = "Question has been deleted!", status = true });
             }

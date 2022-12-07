@@ -38,7 +38,6 @@ namespace ServiceLayer.Data
         public void Delete(int questionId)
         {
             Question question = GetById(questionId);
-            unitOfWork.CommentRep.removebyQuestionId(questionId);
             Delete(question);
             unitOfWork.Commit();
         }

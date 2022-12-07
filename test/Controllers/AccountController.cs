@@ -119,7 +119,7 @@ namespace Fatwa.Controllers
             IdentityResult result = null;
             result = await userManager.AddToRoleAsync(user, role.Name);
             return Ok(new { message = "User added to role Successfully !", status = true });
-
+          
 
         }
 
